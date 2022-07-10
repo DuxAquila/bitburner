@@ -28,14 +28,14 @@ function ServerScript(ns, host, target) {
 	var ram = ns.getServerRam(host);
 	if (ram != 0) {
 		var ScriptRam = ns.getScriptRam("hack.js");
-		var treads = ram[0] / ScriptRam;
+		var treads = Math.floor(ram[0] / ScriptRam);
 		ns.killall(host)
 		ns.exec("hack.js", host, treads, target);
 
 	} else {
-		ns.printf("======================================")
-		ns.printf("== Server " + host + " hat 0GB RAM ==")
-		ns.printf("======================================")
+		ns.printf("======================================");
+		ns.printf("== Server " + host + " hat 0GB RAM ==");
+		ns.printf("======================================");
 		return 0;
 	}
 
