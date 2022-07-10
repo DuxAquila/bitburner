@@ -25,8 +25,8 @@ function Portopen(ns, host) {
 }
 
 function ServerScript(ns, host, target) {
-	var ram = ns.getServerRam(host);
-	if (ram != 0) {
+	var ram = (!ns.getServerRam(host)) ? 0 : ns.getServerRam(host);
+	if (ram[0] != 0) {
 		var ScriptRam = ns.getScriptRam("hack.js");
 		var treads = Math.floor(ram[0] / ScriptRam);
 		ns.killall(host)
