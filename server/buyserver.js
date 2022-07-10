@@ -15,12 +15,16 @@ export async function main(ns) {
 	}
 	var target = (!targetname) ? "n00dles" : targetname;
 
-	for (i = 1; i <= 3; ++i) {
+	for (i = 1; i <= 25; ++i) {
 		var host = hn + i;
-		ns.purchaseServer(host, ram);
-		await ServerScript(ns, host, target)
-
-
+		if (!ns.serverExists(host)) {
+			var Cost = ns.getPurchasedServerCost(ram);
+			var Money = ns.getServerMoneyAvailable("home");
+			if (Cost <= Money) {
+				ns.purchaseServer(host, ram);
+				await ServerScript(ns, host, target)
+			}
+		}
 	}
 
 }
