@@ -24,17 +24,17 @@ function Portopen(ns, host) {
 
 }
 
-function ServerScript(ns, host) {
+function ServerScript(ns, host, target) {
 	var ram = ns.getServerRam(host);
 	if (ram != 0) {
 		var ScriptRam = ns.getScriptRam("hack.js");
 		var treads = ram[0] / ScriptRam;
 		ns.killall(host)
-		ns.exec("hack.js", host, treads,);
+		ns.exec("hack.js", host, treads, target);
 
 	} else {
 		ns.printf("======================================")
-		ns.printf("== Server " + host + " hat 0GB RAM ==" )
+		ns.printf("== Server " + host + " hat 0GB RAM ==")
 		ns.printf("======================================")
 		return 0;
 	}
@@ -42,6 +42,10 @@ function ServerScript(ns, host) {
 }
 
 export async function main(ns) {
+
+	const args = ns.flags([['help', false]]);
+	const hostname = args._[0];
+
 
 	ns.disableLog("disableLog");
 	ns.disableLog("fileExists");
@@ -61,6 +65,14 @@ export async function main(ns) {
 	ns.disableLog("killall");
 	ns.disableLog("exec");
 
+	if (args.help) {
+		ns.tprintf("===== Hilfe =====");
+		ns.tprintf(" Sie können ein Host angeben der gehackt werden soll");
+		ns.tprintf(`> run ${ns.getScriptName()} n00dles`);
+		return;
+	}
+
+	var target = (!hostname) ? "n00dles" : hostname;
 	var Server = String(ns.read('serverlist.txt'));
 	Server = Server.replace(/ /g, '');
 	Server = Server.split(",");
@@ -76,10 +88,10 @@ export async function main(ns) {
 					popen = Portopen(ns, Server[i])
 					if (ns.getServerNumPortsRequired(Server[i]) <= popen) {
 						await ns.nuke(Server[i]);
-						ServerScript(ns, Server[i]);
+						ServerScript(ns, Server[i], target);
 					};
 				} else {
-					ServerScript(ns, Server[i]);
+					ServerScript(ns, Server[i], target);
 				};
 			}
 			i++;
