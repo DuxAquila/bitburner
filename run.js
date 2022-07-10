@@ -1,50 +1,9 @@
-function Portopen(ns, host) {
-	var popen = 0;
-	if (ns.fileExists('BruteSSH.exe') == true) {
-		ns.brutessh(host);
-		popen++
-	};
-	if (ns.fileExists('FTPCrack.exe') == true) {
-		ns.ftpcrack(host);
-		popen++
-	};
-	if (ns.fileExists('relaySMTP.exe') == true) {
-		ns.relaysmtp(host);
-		popen++
-	};
-	if (ns.fileExists('HTTPWorm.exe') == true) {
-		ns.httpworm(host);
-		popen++
-	};
-	if (ns.fileExists('SQLInject.exe') == true) {
-		ns.sqlinject(host);
-		popen++
-	};
-	return popen;
-
-}
-
-function ServerScript(ns, host, target) {
-	var ram = (!ns.getServerRam(host)) ? 0 : ns.getServerRam(host);
-	if (ram[0] != 0) {
-		var ScriptRam = ns.getScriptRam("hack.js");
-		var treads = Math.floor(ram[0] / ScriptRam);
-		ns.killall(host)
-		ns.exec("hack.js", host, treads, target);
-
-	} else {
-		ns.printf("======================================");
-		ns.printf("== Server " + host + " hat 0GB RAM ==");
-		ns.printf("======================================");
-		return 0;
-	}
-
-}
+import { Portopen, ServerScript} from "utils.js";
 
 export async function main(ns) {
 
 	const args = ns.flags([['help', false]]);
-	const hostname = args._[0];
+	const targetname = args._[0];
 
 
 	ns.disableLog("disableLog");
@@ -72,7 +31,7 @@ export async function main(ns) {
 		return;
 	}
 
-	var target = (!hostname) ? "n00dles" : hostname;
+	var target = (!targetname) ? "n00dles" : targetname;
 	var Server = String(ns.read('serverlist.txt'));
 	Server = Server.replace(/ /g, '');
 	Server = Server.split(",");
@@ -81,17 +40,16 @@ export async function main(ns) {
 	while (true) {
 		if (i < Server.length) {
 
-			await ns.scp("hack.js", Server[i]);
 			var popen = 0;
 			if (ns.getServerRequiredHackingLevel(Server[i]) <= ns.getHackingLevel()) {
 				if (ns.hasRootAccess(Server[i]) == false) {
 					popen = Portopen(ns, Server[i])
 					if (ns.getServerNumPortsRequired(Server[i]) <= popen) {
 						await ns.nuke(Server[i]);
-						ServerScript(ns, Server[i], target);
+						await ServerScript(ns, Server[i], target);
 					};
 				} else {
-					ServerScript(ns, Server[i], target);
+					await ServerScript(ns, Server[i], target);
 				};
 			}
 			i++;
