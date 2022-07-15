@@ -8,6 +8,8 @@ export async function main(ns) {
     ns.disableLog("getServerMinSecurityLevel");
     ns.disableLog("getServerSecurityLevel");
     ns.disableLog("getServerMoneyAvailable");
+    ns.disableLog("sleep");
+    
     if (args.help) {
         ns.tprintf("===== Hilfe =====");
         ns.tprintf(" Sie können ein Host angeben der gehackt werden soll");
@@ -25,8 +27,12 @@ export async function main(ns) {
         } else if (ns.getServerMoneyAvailable(target) <= money) {
             await ns.grow(target);
         } else {
-            await ns.hack(target);
+            if (ns.getHostname() == "home") {
+                await ns.sleep(250);
+            } else {
+                await ns.hack(target);
+            }
         }
     }
-
 }
+
