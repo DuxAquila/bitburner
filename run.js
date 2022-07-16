@@ -8,6 +8,7 @@ export async function main(ns) {
 
 
 	ns.disableLog("ALL");
+    ns.enableLog("tprintf");
 
 	if (args.help) {
 		ns.tprintf("===== Hilfe =====");

@@ -4,6 +4,7 @@ export async function main(ns) {
 	const hostname = args._[0];
 
 	ns.disableLog("ALL");
+    ns.enableLog("tprintf");
 	
 	if (args.help) {
 		ns.tprintf("===== Hilfe =====");

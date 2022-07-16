@@ -76,6 +76,7 @@ function check_cheapest(ns) {
 export async function main(ns) {
 
     ns.disableLog("ALL");
+    ns.enableLog("print");
 
     while (true) {
         await check_cheapest(ns)
