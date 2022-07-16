@@ -7,23 +7,7 @@ export async function main(ns) {
 	const targetname = args._[1];
 
 
-	ns.disableLog("disableLog");
-	ns.disableLog("fileExists");
-	ns.disableLog("brutessh");
-	ns.disableLog("ftpcrack");
-	ns.disableLog("relaysmtp");
-	ns.disableLog("httpworm");
-	ns.disableLog("sqlinject");
-	ns.disableLog("getServerRam");
-	ns.disableLog("getScriptRam");
-	ns.disableLog("getServerRequiredHackingLevel");
-	ns.disableLog("getHackingLevel");
-	ns.disableLog("hasRootAccess");
-	ns.disableLog("getServerNumPortsRequired");
-	ns.disableLog("nuke");
-	ns.disableLog("scp");
-	ns.disableLog("killall");
-	ns.disableLog("exec");
+	ns.disableLog("ALL");
 
 	if (args.help) {
 		ns.tprintf("===== Hilfe =====");

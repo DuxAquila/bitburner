@@ -3,12 +3,7 @@ export async function main(ns) {
     const args = ns.flags([['help', false]]);
     const hostname = args._[0];
 
-    ns.disableLog("disableLog");
-    ns.disableLog("getServerMaxMoney");
-    ns.disableLog("getServerMinSecurityLevel");
-    ns.disableLog("getServerSecurityLevel");
-    ns.disableLog("getServerMoneyAvailable");
-    ns.disableLog("sleep");
+    ns.disableLog("ALL");
     
     if (args.help) {
         ns.tprintf("===== Hilfe =====");
