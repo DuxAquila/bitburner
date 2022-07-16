@@ -7,6 +7,7 @@ export async function ServerScript(ns, host, target) {
 		await ns.scp("hack.js", host);
 		ns.killall(host)
 		ns.exec("hack.js", host, treads, target);
+		return 1;
 
 	} else {
 		ns.printf("======================================");
