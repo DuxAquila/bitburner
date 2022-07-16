@@ -4,6 +4,9 @@ export async function main(ns) {
     const hostname = args._[0];
 
     ns.disableLog("ALL");
+    ns.enableLog("grow")
+    ns.enableLog("hack")
+    ns.enableLog("weaken")
     ns.enableLog("tprintf");
     
     if (args.help) {
@@ -31,4 +34,3 @@ export async function main(ns) {
         }
     }
 }
-
