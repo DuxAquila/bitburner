@@ -32,10 +32,8 @@ export async function main(ns) {
 			await ns.killall(host[i]);
 			ns.deleteServer(host[i]);
 		} else if (action == "buy") {
-			ns.tprintf("Stop?");
 			for (b = 1; b <= 25; ++b) {
 				var hostname = hn + b;
-				ns.tprintf(hostname);
 				if (!ns.serverExists(hostname)) {
 					var Cost = ns.getPurchasedServerCost(ram);
 					var Money = ns.getServerMoneyAvailable("home");
