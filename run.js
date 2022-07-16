@@ -22,46 +22,64 @@ export async function main(ns) {
 		return;
 	}
 
+
 	var target = (!targetname) ? "n00dles" : targetname;
+	var action = (!args.stop) ? "start" : "stop";
 	var Server = String(ns.read('serverlist.txt'));
 	Server = Server.replace(/ /g, '');
 	Server = Server.split(",");
 	var host = ns.getPurchasedServers();
 	var i = 0;
 	var z = 0;
+	var count = 0;
 
 	for (z = 0; z < host.length; z++) {
 		if (args.start) {
 			ns.killall(host[z]);
 			await ServerScript(ns, host[z], target)
-		} 
+			count++
+		}
 		if (args.stop) {
 			ns.killall(host[z]);
+			count++
 		}
 	}
 
 	for (i = 0; i < Server.length; i++) {
 		var popen = 0;
-		if (args.start) {
+		var output = 0;
+		if (args.start && !args.stop) {
 			if (ns.getServerRequiredHackingLevel(Server[i]) <= ns.getHackingLevel()) {
 				if (ns.hasRootAccess(Server[i]) == false) {
 					popen = Portopen(ns, Server[i])
 					if (ns.getServerNumPortsRequired(Server[i]) <= popen) {
 						await ns.nuke(Server[i]);
-						await ServerScript(ns, Server[i], target);
+						output = await ServerScript(ns, Server[i], target);
+						count++
 					};
 				} else {
-					await ServerScript(ns, Server[i], target);
+					output = await ServerScript(ns, Server[i], target);
+					if (output == 1){
+						count++
+					}
 				};
 			}
 		}
 		if (args.stop) {
-			if (ns.getServerRequiredHackingLevel(Server[i]) <= ns.getHackingLevel()) {
-				if (ns.scriptRunning("hack.js", Server[i]) == true) {
-					ns.killall(Server[i]);
+			var ram = (!ns.getServerRam(Server[i])) ? 0 : ns.getServerRam(Server[i]);
+			var dump = Server[i];
+			if (ns.getServerRequiredHackingLevel(Server[i]) <= ns.getHackingLevel(Server[i])) {
+				if (ram[1] != 0) {
+					count++
 				}
 			}
 
 		}
 	}
+	
+	if (count >= 0) {
+		var ausgabe = (action == "start") ? "gestartet" : "gestopt";
+		ns.tprintf(`Script hat erfolgreich ${count} Server ${ausgabe}`)
+	}
+
 }
