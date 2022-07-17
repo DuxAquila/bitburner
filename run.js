@@ -55,7 +55,9 @@ export async function main(ns) {
 					if (ns.getServerNumPortsRequired(Server[i]) <= popen) {
 						await ns.nuke(Server[i]);
 						output = await ServerScript(ns, Server[i], target);
+					if (output == 1){
 						count++
+					}
 					};
 				} else {
 					output = await ServerScript(ns, Server[i], target);
