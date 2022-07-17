@@ -26,7 +26,7 @@ export async function main(ns) {
         ns.tprint("Dieses Skript hilft Dir, einen Server im Netzwerk zu finden, und zeigt Dir den Pfad, um dorthin zu gelangen.");
         ns.tprint(`Anwendung: run ${ns.getScriptName()} SERVER`);
         ns.tprint("Beispiel:");
-        ns.tprint(`> run ${ns.getScriptName()} icarus`);
+        ns.tprint(`> run ${ns.getScriptName()} w0r1d_d43m0n`);
         return;
     }
 
