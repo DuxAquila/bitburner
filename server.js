@@ -44,7 +44,7 @@ export async function main(ns) {
 			await ns.killall(host[i]);
 			ns.deleteServer(host[i]);
 		} else if (args.buy) {
-			for (b = 1; b <= 25; ++b) {
+			for (b = 1; b <= ns.getPurchasedServerLimit() ; ++b) {
 				var hostname = hn + b;
 				if (!ns.serverExists(hostname)) {
 					var Cost = ns.getPurchasedServerCost(ram);
